@@ -13,20 +13,14 @@ package dataguise1;
  * 			a) if Yes, process execution goes to step 1
  * 			b) if No, program terminates with a Thank You note.
  * */
-import java.util.ArrayList;
+
 import java.util.Scanner;
 
 import java.sql.*;
 
-import java.util.ListIterator;
-
 public class Payroll {
 	
 	public static void main(String[] args) throws SQLException {
-		ArrayList<Salaried> salariedList = new <Salaried>ArrayList();
-		ArrayList<Commission> commissionList = new <Commission>ArrayList();
-		ArrayList<SalariedCommission> salariedCommissionList = new <SalariedCommission>ArrayList();
-		ArrayList<Hourly> hourlyList = new <Hourly>ArrayList();
 		
 		int searchFlag = 0;
 		int input = 1;
@@ -74,18 +68,16 @@ public class Payroll {
 				case 1:
 					System.out.print("Enter this week salary: ");
 					int salary = sc.nextInt();
-					
+					//Setting the inputs entered by the user.
 					Salaried salariedEmp = new Salaried(salary);
 					salariedEmp.setFirstName(fname);
 					salariedEmp.setLastName(lname);
 					salariedEmp.setEmail(email);
 					salariedEmp.setEmployeeId(id);
 					
-					//salariedList.add(salariedEmp);
-					
 				try {
 					PreparedStatement pst = con.prepareStatement("insert into salaried values(?,?,?,?,?)");
-					
+					//Inserting values of salaried employees into the DB.
 					pst.setString(1, salariedEmp.getFirstName());
 					pst.setString(2, salariedEmp.getLastName());
 					pst.setString(3, salariedEmp.getEmployeeId());
@@ -110,18 +102,16 @@ public class Payroll {
 				case 2:
 					System.out.print("Enter this week sale: ");
 					int sale = sc.nextInt();
-					
+					//Setting the inputs entered by the user.
 					Commission commissionEmp = new Commission(sale);
 					commissionEmp.setFirstName(fname);
 					commissionEmp.setLastName(lname);
 					commissionEmp.setEmail(email);
 					commissionEmp.setEmployeeId(id);
 					
-					//commissionList.add(commissionEmp);
-					
 				try {
 					PreparedStatement pst = con.prepareStatement("insert into commission values(?,?,?,?,?,?)");
-					
+					//Inserting values of commission employees into the DB.
 					pst.setString(1, commissionEmp.getFirstName());
 					pst.setString(2, commissionEmp.getLastName());
 					pst.setString(3, commissionEmp.getEmployeeId());
@@ -149,21 +139,16 @@ public class Payroll {
 					int salary2 = sc.nextInt();
 					System.out.print("Enter this week sale: ");
 					int sale2 = sc.nextInt();
-					//System.out.print("Set increment % in weekly base salary: ");
-					//int increment = sc.nextInt();
-					
+					//Setting the inputs entered by the user.
 					SalariedCommission salariedCommissionEmp = new SalariedCommission(salary2, sale2);
 					salariedCommissionEmp.setFirstName(fname);
 					salariedCommissionEmp.setLastName(lname);
 					salariedCommissionEmp.setEmail(email);
 					salariedCommissionEmp.setEmployeeId(id);
-					//salariedCommissionEmp.setIncrementInWeeklySalary(increment);
-					
-					//salariedCommissionList.add(salariedCommissionEmp);
 
 					try {
 						PreparedStatement pst = con.prepareStatement("insert into salariedcommission values(?,?,?,?,?,?,?)");
-						
+						//Inserting values of salaied-commission employees into the DB.
 						pst.setString(1, salariedCommissionEmp.getFirstName());
 						pst.setString(2, salariedCommissionEmp.getLastName());
 						pst.setString(3, salariedCommissionEmp.getEmployeeId());
@@ -198,11 +183,9 @@ public class Payroll {
 					hourlyEmp.setEmail(email);
 					hourlyEmp.setEmployeeId(id);
 					
-					//hourlyList.add(hourlyEmp);
-					
 					try {
 						PreparedStatement pst = con.prepareStatement("insert into hourly values(?,?,?,?,?,?)");
-						
+						//Inserting values of hourly employees into the DB.
 						pst.setString(1, hourlyEmp.getFirstName());
 						pst.setString(2, hourlyEmp.getLastName());
 						pst.setString(3, hourlyEmp.getEmployeeId());
@@ -241,7 +224,7 @@ public class Payroll {
 				PreparedStatement pst = con.prepareStatement("select * from salaried where email=?");
 				pst.setString(1, searchEmail);
 				ResultSet rs = pst.executeQuery();
-				
+				//Retrieve and sout the values of salaried employees from the DB.
 				while(rs.next()) {
 					String emailRetrived = rs.getString("email");
 					if(emailRetrived.equalsIgnoreCase(searchEmail)) {
@@ -263,7 +246,7 @@ public class Payroll {
 				PreparedStatement pst = con.prepareStatement("select * from commission where email=?");
 				pst.setString(1, searchEmail);
 				ResultSet rs = pst.executeQuery();
-				
+				//Retrieve and sout the values of commission employees from the DB.
 				while(rs.next()) {
 					String emailRetrived = rs.getString("email");
 					if(emailRetrived.equalsIgnoreCase(searchEmail)) {
@@ -286,7 +269,7 @@ public class Payroll {
 				PreparedStatement pst = con.prepareStatement("select * from salariedCommission where email=?");
 				pst.setString(1, searchEmail);
 				ResultSet rs = pst.executeQuery();
-				
+				//Retrieve and sout the values of salaried-commission employees from the DB.
 				while(rs.next()) {
 					String emailRetrived = rs.getString("email");
 					if(emailRetrived.equalsIgnoreCase(searchEmail)) {
@@ -310,7 +293,7 @@ public class Payroll {
 				PreparedStatement pst = con.prepareStatement("select * from hourly where email=?");
 				pst.setString(1, searchEmail);
 				ResultSet rs = pst.executeQuery();
-				
+				//Retrieve and sout the values of hourly employees from the DB.
 				while(rs.next()) {
 					String emailRetrived = rs.getString("email");
 					if(emailRetrived.equalsIgnoreCase(searchEmail)) {
